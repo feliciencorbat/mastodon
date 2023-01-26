@@ -19,9 +19,10 @@ services:
 
   mastodon-web:
     image: 'tootsuite/mastodon:v4.0'
-    command: 'bash -c "rm -f /mastodon/tmp/pids/server.pid; bundle exec rails s -p 3000"'
+    command: 'bash -c "/provision.sh; rm -f /mastodon/tmp/pids/server.pid; bundle exec rails s -p 3000"'
     volumes:
       - './web:/mastodon/public/system'
+      - './provision.sh:/provision.sh:ro'
     environment:
       RAILS_ENV: 'production'
       LOCAL_DOMAIN: '${MASTODON_DOMAIN}'
