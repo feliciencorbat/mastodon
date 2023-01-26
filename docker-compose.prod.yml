@@ -54,7 +54,7 @@ services:
       - traefik.http.services.mastodon.loadbalancer.server.port=3000
       - traefik.docker.network=proxy
       
-mastodon-streaming:
+  mastodon-streaming:
     image: 'tootsuite/mastodon:v4.0'
     command: node ./streaming
     volumes:
@@ -90,7 +90,7 @@ mastodon-streaming:
       - traefik.http.routers.mastodon-streaming-secure.service=mastodon-streaming
       - traefik.http.services.mastodon-streaming.loadbalancer.server.port=4000
       - traefik.docker.network=proxy
-
+  
   mastodon-sidekiq:
     image: 'tootsuite/mastodon:v4.0'
     command: 'bundle exec sidekiq'
