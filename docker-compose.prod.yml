@@ -82,7 +82,7 @@ services:
       - traefik.http.routers.mastodon-streaming.entrypoints=http
       - traefik.http.routers.mastodon-streaming.rule=(Host("champis.social") && PathPrefix("/api/v1/streaming"))
       - traefik.http.middlewares.mastodon-streaming-https-redirect.redirectscheme.scheme=https
-      - traefik.http.routers.mastodon-streaming.middlewares=mastodon-https-redirect
+      - traefik.http.routers.mastodon-streaming.middlewares=mastodon-streaming-https-redirect
       - traefik.http.routers.mastodon-streaming-secure.entrypoints=https
       - traefik.http.routers.mastodon-streaming-secure.rule=(Host("champis.social") && PathPrefix("/api/v1/streaming"))
       - traefik.http.routers.mastodon-streaming-secure.tls=true
