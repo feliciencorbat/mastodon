@@ -51,6 +51,8 @@ services:
       - traefik.http.routers.mastodon-secure.rule=Host("champis.social")
       - traefik.http.routers.mastodon-secure.tls=true
       - traefik.http.routers.mastodon-secure.tls.certresolver=http
+      - traefik.http.routers.mastodon-secure.service=mastodon
+      - traefik.http.services.mastodon.loadbalancer.server.port=3000
       - traefik.docker.network=proxy
 
   mastodon-sidekiq:
