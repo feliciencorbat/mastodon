@@ -2,9 +2,11 @@ version: '2'
 
 services:
   mastodon-db:
+    container_name: mastodon_db
     image: 'postgres:15.1-alpine'
     volumes:
       - './db:/var/lib/postgresql/data'
+    restart: unless-stopped
     environment:
       POSTGRES_DB: '${MASTODON_POSTGRES_DATABASE}'
       POSTGRES_USER: '${MASTODON_POSTGRES_USERNAME}'
@@ -13,16 +15,19 @@ services:
       - mastodon_backend
 
   mastodon-redis:
+    container_name: mastodon_redis
     image: 'redis:7.0-alpine'
     networks:
       - mastodon_backend
 
   mastodon-web:
+    container_name: mastodon_web
     image: 'tootsuite/mastodon:v4.0'
     command: 'bash -c "/provision.sh; rm -f /mastodon/tmp/pids/server.pid; bundle exec rails s -p 3000"'
     volumes:
       - './web:/mastodon/public/system'
       - './provision.sh:/provision.sh:ro'
+    restart: unless-stopped
     environment:
       RAILS_ENV: 'production'
       LOCAL_DOMAIN: '${MASTODON_DOMAIN}'
@@ -56,10 +61,12 @@ services:
       - traefik.docker.network=proxy
       
   mastodon-streaming:
+    container_name: mastodon_streaming
     image: 'tootsuite/mastodon:v4.0'
     command: node ./streaming
     volumes:
       - './web:/mastodon/public/system'
+    restart: unless-stopped
     environment:
       RAILS_ENV: 'production'
       LOCAL_DOMAIN: '${MASTODON_DOMAIN}'
@@ -93,10 +100,12 @@ services:
       - traefik.docker.network=proxy
   
   mastodon-sidekiq:
+    container_name: mastodon_sidekiq
     image: 'tootsuite/mastodon:v4.0'
     command: 'bundle exec sidekiq'
     volumes:
       - './web:/mastodon/public/system'
+    restart: unless-stopped
     environment:
       RAILS_ENV: 'production'
       LOCAL_DOMAIN: '${MASTODON_DOMAIN}'
