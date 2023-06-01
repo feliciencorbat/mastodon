@@ -3,7 +3,7 @@ version: '2'
 services:
   mastodon-db:
     container_name: mastodon_db
-    image: 'postgres:15.2-alpine'
+    image: 'postgres:15.3-alpine'
     volumes:
       - './db:/var/lib/postgresql/data'
     restart: unless-stopped
