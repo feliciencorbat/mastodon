@@ -62,7 +62,7 @@ services:
       
   mastodon-streaming:
     container_name: mastodon_streaming
-    image: 'tootsuite/mastodon:v4.1.4'
+    image: 'tootsuite/mastodon:v4.1'
     command: node ./streaming
     volumes:
       - './web:/mastodon/public/system'
